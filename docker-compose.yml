@@ -1,0 +1,47 @@
+version: '3.6'
+
+services:
+    mlbootstrap:
+      image: ${MARKLOGIC_DOCKER_IMAGE}
+      container_name: bootstrap
+      domainname: .
+      environment:
+        - MARKLOGIC_INIT=true
+        - MARKLOGIC_ADMIN_USERNAME=admin
+        - MARKLOGIC_ADMIN_PASSWORD=admin
+        - TZ=Europe/Prague
+      ports:
+        - 7997-8010:7997-8010
+      networks:
+      - external_net
+      - internal_net
+
+    dnode:
+      image: ${MARKLOGIC_DOCKER_IMAGE}
+      domainname: .
+      environment:
+        - MARKLOGIC_INIT=true
+        - MARKLOGIC_ADMIN_USERNAME=admin
+        - MARKLOGIC_ADMIN_PASSWORD=admin
+        - MARKLOGIC_JOIN_CLUSTER=true
+        - TZ=Europe/Prague
+      depends_on:
+      - mlbootstrap
+      networks:
+      - internal_net
+
+    testrunner:
+      image: python:3.6-buster
+      container_name: testrunner
+      working_dir: /src
+      volumes:
+      - ./:/src
+      stdin_open: true
+      tty: true
+      networks:
+      - external_net
+
+networks:
+  external_net: {}
+  internal_net:
+    internal: true
