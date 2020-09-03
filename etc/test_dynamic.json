@@ -1,0 +1,9 @@
+{
+	"params": {"password": "test"},
+	"config": [{
+		"user": [{
+			"user-name": "example-user",
+			"password": "%%password%%"
+		}]
+	}]
+}

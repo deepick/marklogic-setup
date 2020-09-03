@@ -1,0 +1,21 @@
+{
+	"name": "only-one-crawler",
+	"description": "my trigger",
+	"event": {
+		"data-event": {
+			"collection-scope": {
+				"uri": "/crawl-run"
+			},
+			"document-content": {
+				"update-kind": "create"
+			},
+			"when": "pre-commit"
+		}
+	},
+	"module": "only-one-crawler.xqy",
+	"module-db": "Modules",
+	"module-root": "/modules/",
+	"enabled": true,
+	"recursive": true,
+	"task-priority": "normal"
+}
