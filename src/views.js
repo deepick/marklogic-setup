@@ -3,7 +3,7 @@ const path = require('path');
 
 const installView = async (db, { viewDefinitionFile }) => {
     const viewDefinition = fs.readFileSync(viewDefinitionFile, 'UTF-8');
-    const basename = path.basename(viewDefinitionFile);
+    const uri = `/templates/${path.basename(viewDefinitionFile)}`;
 
     const query = `
 xquery version "1.0-ml";
@@ -11,12 +11,13 @@ xquery version "1.0-ml";
 import module namespace tde = "http://marklogic.com/xdmp/tde" 
         at "/MarkLogic/tde.xqy";
 
-let $template := ${viewDefinition}
+declare variable $uri external;
+declare variable $viewDefinition external;
 
-return tde:template-insert('/templates/${basename}', $template)
+tde:template-insert($uri, xdmp:unquote($viewDefinition))
 `;
 
-    await db.xqueryEval(query).result();
+    await db.xqueryEval(query, { uri, viewDefinition }).result();
 }
 
 exports.installView = installView;
