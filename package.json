@@ -1,0 +1,25 @@
+{
+  "name": "marklogic-setup",
+  "version": "1.0.0",
+  "description": "Tool to set up MarkLogic",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "jest",
+    "watch": "npm-watch"
+  },
+  "author": "Hans Hübner",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "glob": "^7.1.6",
+    "marklogic": "^2.4.2",
+    "needle": "^2.5.2",
+    "uuid": "^8.1.0",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "install": "^0.13.0",
+    "jest": "^26.1.0",
+    "npm-watch": "^0.6.0"
+  }
+}
