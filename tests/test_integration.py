@@ -40,7 +40,7 @@ def test_marklogic_is_accessible(test_marklogic_alive_url, test_cma_creds):
 
 
 def test_curl_command_is_avail_can_access_marklogic(
-        command_curl, test_cma_url, test_cma_creds
+    command_curl, test_cma_url, test_cma_creds
 ):
     """curl command should be able to access test MarkLogic cluster"""
     cmd = [
@@ -56,7 +56,7 @@ def test_curl_command_is_avail_can_access_marklogic(
 
 
 def test_apply_cma_configuration_with_curl(
-        command_curl, test_cma_url, test_rma_url, test_cma_creds
+    command_curl, test_cma_url, test_rma_url, test_cma_creds
 ):
     """create configuration and apply using curl"""
     with open("etc/test_config.json", "r") as json_file:
@@ -142,9 +142,7 @@ def test_apply_cma_configuration_with_curl(
     )
 
 
-def test_create_trigger_with_curl(
-        command_curl, test_rma_url, test_cma_creds
-):
+def test_create_trigger_with_curl(command_curl, test_rma_url, test_cma_creds):
     """create configuration and apply using curl"""
     with open("etc/test_trigger.json", "r") as json_file:
         data = json.load(json_file)
