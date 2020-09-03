@@ -5,10 +5,10 @@ git repo: https://gitlab.com/deepick/deepick-2020-1
 A configuration payload for bootstrapping deepick.eu MarkLogic environment.
 
 The work as defined:
-* [MarkLogic configuration payload](etc/test_config.json) for bootstrapping deepick.eu config
+* [MarkLogic configuration payload](etc/config.json) for bootstrapping deepick.eu config
 * [integration tests](tests/test_integration.py) for bootstrapping deepick.eu config
 * [curl](src/curl_integration_example.sh) and [python](src/python_integration_example.py) integration examples demonstrating applying MarkLogic configuration
-* [create trigger configuration payload](etc/test_trigger.json)
+* [create trigger configuration payload](etc/trigger.json)
 * [curl example](src/curl_create_trigger_example.sh) of creating a trigger
 * [curl example](src/curl_dynamic_example.sh) using dynamic values
 * document with this [README.md](README.md)
@@ -25,14 +25,14 @@ Applicable scope of this work highlighted in the following diagram:
 
 The `src` directory contains integration examples.
 
-Both configuration examples POST [etc/test_config.json](etc/test_config.json) to `manage/v3` endpoint.
+Both configuration examples POST [etc/config.json](etc/config.json) to `manage/v3` endpoint.
 
 ### using curl
 example of applying the configuration using curl 
 ```
 curl --anyauth --user admin:admin         \
       -H "Content-type: application/json" \
-      -d@../etc/test_config.json          \
+      -d@../etc/config.json          \
       http://localhost:8002/manage/v3
 ```
 just run: 
@@ -47,7 +47,7 @@ import json
 import requests
 from requests.auth import HTTPDigestAuth
 
-with open("../etc/test_config.json", "r") as json_file:
+with open("../etc/config.json", "r") as json_file:
     data = json.load(json_file)
 
 creds = ["admin", "admin"]

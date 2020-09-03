@@ -13,7 +13,7 @@
 		}
 	},
 	"module": "only-one-crawler.xqy",
-	"module-db": "kerndaten-modules",
+	"module-db": "kerndaten-crawler-modules",
 	"module-root": "/modules/",
 	"enabled": true,
 	"recursive": true,

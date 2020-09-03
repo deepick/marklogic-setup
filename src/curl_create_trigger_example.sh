@@ -6,6 +6,6 @@
 
 curl --anyauth --user admin:admin         \
       -H "Content-type: application/json" \
-      -d@../etc/test_trigger.json          \
+      -d@../etc/trigger.json          \
       http://localhost:8002/manage/v2/databases/kerndaten-triggers/triggers
 

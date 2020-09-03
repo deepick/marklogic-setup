@@ -7,7 +7,7 @@ import json
 import requests
 from requests.auth import HTTPDigestAuth
 
-with open("../etc/test_config.json", "r") as json_file:
+with open("../etc/config.json", "r") as json_file:
     data = json.load(json_file)
 
 creds = ["admin", "admin"]

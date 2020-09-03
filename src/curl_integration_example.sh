@@ -6,5 +6,5 @@
 
 curl --anyauth --user admin:admin         \
       -H "Content-type: application/json" \
-      -d@../etc/test_config.json          \
+      -d@../etc/config.json          \
       http://localhost:8002/manage/v3

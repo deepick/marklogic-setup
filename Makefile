@@ -12,8 +12,8 @@ test_dir=tests
 # configure tests
 ##################
 # use local targets
-#export TEST_MARKLOGIC_HOST=localhost
-#export TEST_CMA_CREDS=admin:admin
+export TEST_MARKLOGIC_HOST=localhost
+export TEST_CMA_CREDS=admin:admin
 
 # use custom curl
 #export TEST_CURL_PATH=/usr/bin/curl

@@ -59,7 +59,7 @@ def test_apply_cma_configuration_with_curl(
     command_curl, test_cma_url, test_rma_url, test_cma_creds
 ):
     """create configuration and apply using curl"""
-    with open("etc/test_config.json", "r") as json_file:
+    with open("etc/config.json", "r") as json_file:
         data = json.load(json_file)
     cmd = [
         command_curl,
@@ -144,7 +144,7 @@ def test_apply_cma_configuration_with_curl(
 
 def test_create_trigger_with_curl(command_curl, test_rma_url, test_cma_creds):
     """create configuration and apply using curl"""
-    with open("etc/test_trigger.json", "r") as json_file:
+    with open("etc/trigger.json", "r") as json_file:
         data = json.load(json_file)
     cmd = [
         command_curl,
