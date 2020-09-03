@@ -1,6 +1,6 @@
 {
 	"name": "only-one-crawler",
-	"description": "my trigger",
+	"description": "Ensure that only one crawler is running at a time",
 	"event": {
 		"data-event": {
 			"collection-scope": {
@@ -13,7 +13,7 @@
 		}
 	},
 	"module": "only-one-crawler.xqy",
-	"module-db": "Modules",
+	"module-db": "kerndaten-modules",
 	"module-root": "/modules/",
 	"enabled": true,
 	"recursive": true,

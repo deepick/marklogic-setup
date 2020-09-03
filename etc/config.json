@@ -1,0 +1,212 @@
+{
+  "config": [
+    {
+      "role": [
+        {
+          "role-name": "kerndaten-reader",
+          "description": "Read access to kerndaten"
+        }
+      ]
+    },
+    {
+      "role": [
+        {
+          "role-name": "kerndaten-rest-reader",
+          "description": "Read access to kerndaten through ReST",
+          "role": [
+            "kerndaten-reader",
+            "rest-reader"
+          ]
+        }
+      ]
+    },
+    {
+      "role": [
+        {
+          "role-name": "kerndaten-writer",
+          "description": "Write access to kerndaten",
+          "permission": [
+            {
+              "role-name": "kerndaten-reader",
+              "capability": "read"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "op": "update",
+      "role": [
+        {
+          "role-name": "kerndaten-writer",
+          "description": "Write access to kerndaten",
+          "permission": [
+            {
+              "role-name": "kerndaten-writer",
+              "capability": "update"
+            },
+            {
+              "role-name": "kerndaten-reader",
+              "capability": "read"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": [
+        {
+          "role-name": "kerndaten-rest-writer",
+          "description": "Write access to kerndaten through ReST",
+          "role": [
+            "kerndaten-writer",
+            "rest-writer"
+          ]
+        }
+      ]
+    },
+    {
+      "role": [
+        {
+          "role-name": "kerndaten-crawler",
+          "description": "Role for the kerndaten crawler process",
+          "role": [
+            "kerndaten-rest-reader",
+            "kerndaten-rest-writer"
+          ]
+        }
+      ]
+    },
+    {
+      "privilege": [
+        {
+          "privilege-name": "kerndaten-uri",
+          "action": "/kerndaten/",
+          "kind": "uri",
+          "role": [
+            "kerndaten-writer"
+          ]
+        },
+        {
+          "privilege-name": "crawler-uri",
+          "action": "/crawler/",
+          "kind": "uri",
+          "role": [
+            "kerndaten-crawler"
+          ]
+        }
+      ]
+    },
+    {
+      "user": [
+        {
+          "user-name": "kerndaten-crawler",
+          "description": "Kerndaten Crawler",
+          "password": "BesserWisser",
+          "role": [
+            "kerndaten-crawler"
+          ]
+        }
+      ]
+    },
+    {
+      "forest": [
+        {
+          "forest-name": "kerndaten-1"
+        },
+        {
+          "forest-name": "kerndaten-2"
+        },
+        {
+          "forest-name": "kerndaten-3"
+        },
+        {
+          "forest-name": "kerndaten-schemas-1"
+        },
+        {
+          "forest-name": "kerndaten-triggers-1"
+        },
+        {
+          "forest-name": "kerndaten-crawler-modules-1"
+        }
+      ]
+    },
+    {
+      "database": [
+        {
+          "database-name": "kerndaten-crawler-modules",
+          "security-database": "Security",
+          "forest": [
+            "kerndaten-crawler-modules-1"
+          ]
+        },
+        {
+          "database-name": "kerndaten-schemas",
+          "security-database": "Security",
+          "forest": [
+            "kerndaten-schemas-1"
+          ]
+        },
+        {
+          "database-name": "kerndaten-triggers",
+          "security-database": "Security",
+          "forest": [
+            "kerndaten-triggers-1"
+          ]
+        },
+        {
+          "database-name": "kerndaten",
+          "security-database": "Security",
+          "schema-database": "kerndaten-schemas",
+          "triggers-database": "kerndaten-triggers",
+          "triple-index": true,
+          "default-ruleset": [
+            {
+              "location": "/rules/kerndaten.rules"
+            }
+          ],
+          "forest": [
+            "kerndaten-1",
+            "kerndaten-2",
+            "kerndaten-3"
+          ]
+        }
+      ]
+    },
+    {
+      "server": [
+        {
+          "server-name": "deepick-kerndaten",
+          "group-name": "Default",
+          "server-type": "http",
+          "enabled": true,
+          "root": "/home/hans/kerndaten-crawler/modules",
+          "port": 9849,
+          "content-database": "kerndaten",
+          "default-user": "nobody"
+        },
+        {
+          "server-name": "deepick-kerndaten.odbc",
+          "group-name": "Default",
+          "server-type": "odbc",
+          "enabled": true,
+          "root": "/",
+          "port": 9850,
+          "content-database": "kerndaten",
+          "modules-database": "kerndaten-crawler-modules"
+        },
+        {
+          "server-name": "deepick-kerndaten.rest",
+          "group-name": "Default",
+          "server-type": "http",
+          "enabled": true,
+          "root": "/",
+          "port": 9848,
+          "url-rewriter": "/mantikor/rewrite-handler.xqy",
+          "content-database": "kerndaten",
+          "modules-database": "kerndaten-crawler-modules"
+        }
+      ]
+    }
+  ]
+}
