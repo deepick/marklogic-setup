@@ -9,5 +9,14 @@
       "format": "text",
       "contentType": "text/plain"
     }
+  },
+  "schemas": {
+    ".*": {
+      "permissions": [
+        { "role-name": "kerndaten-reader", "capabilities": ["read"] }
+      ],
+      "format": "text",
+      "contentType": "text/plain"
+    }
   }
 }

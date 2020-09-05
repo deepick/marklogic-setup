@@ -23,11 +23,11 @@ const getPropertiesForPath = (propertyDefinitions, path) => {
 exports.getPropertiesForPath = getPropertiesForPath;
 
 const uploadDirectory = async ({
+  db,
   directory,
   database,
   propertyDefinitions,
 }) => {
-  let db = marklogic.createDatabaseClient({ ...config.db, database });
   const directoryWithoutSlash = directory.replace(/\/*$/, "");
   const files = glob
     .sync(`${directoryWithoutSlash}/**/*`, { nodir: true })
@@ -39,9 +39,24 @@ const uploadDirectory = async ({
         ...properties,
       };
     });
-  await db.documents.write(files).result();
-
-  db.release();
+  if (files.length) {
+    console.log('Uploading', files.length, 'files to database', database);
+    await db.documents.write(files).result();
+  }
 };
 
 exports.uploadDirectory = uploadDirectory;
+
+const seed = async ({ marklogicConfiguration, seedDefinitionsFile }) => {
+  const seedDefinitions = JSON.parse(
+    fs.readFileSync(seedDefinitionsFile, "UTF-8")
+  );
+  for (const [directory, propertyDefinitions] of Object.entries(seedDefinitions)) {
+    const database = marklogicConfiguration.databaseNames[directory];
+    let db = marklogic.createDatabaseClient({ ...config.db, database });
+    await uploadDirectory({ db, directory, database, propertyDefinitions });
+    db.release();
+  }
+};
+
+ exports.seed = seed;

@@ -1,5 +1,7 @@
+const fs = require("fs");
 const yargs = require("yargs");
 const marklogic = require("marklogic");
+const jp = require("jsonpath");
 
 const config = require("./config");
 const views = require("./views");
@@ -15,28 +17,52 @@ const withDb = (handler) => {
     });
 };
 
-const propertyDefinitions = {
-  "modules": {
-    ".*": {
-      "permissions": [
-        { "role-name": "kerndaten-writer", "capabilities": ["execute"] }
-      ]
-    },
-    "\\.sparql$": {
-      "format": "text",
-      "contentType": "text/plain"
-    }
+const queryOneValue = (config, path) => {
+  const values = [...new Set(jp.query(config, path))];
+  switch (values.length) {
+    case 0:
+      throw new Error(`CMS configuration did not contain value for path ${path}`);
+    case 1:
+      return values[0];
+    default:
+      throw new Error(`CMA configuration did not contain value for path ${path}`)
   }
+}
+
+const parseMarkLogicConfig = (filename) => {
+  const config = JSON.parse(fs.readFileSync(filename, "utf-8"));
+  return {
+    databaseNames: {
+      schemas: queryOneValue(
+        config,
+        '$.config[*].database[*]["schema-database"]'
+      ),
+      triggers: queryOneValue(
+        config,
+        '$.config[*].database[*]["triggers-database"]'
+      ),
+      modules: queryOneValue(
+        config,
+        '$.config[*].server[*]["modules-database"]'
+      ),
+      content: queryOneValue(
+        config,
+        '$.config[*].server[*]["content-database"]'
+      ),
+    },
+  };
 };
 
 const argv = yargs
   .command(
-    "upload-documents <directory> <database>",
-    "Upload files",
+    "seed <marklogic-configuration-file> <seed-definitions-file>",
+    "Seed databases files",
     () => {},
-    (argv) => upload.uploadDirectory({ ...argv, propertyDefinitions: propertyDefinitions.modules })
+    ({ marklogicConfigurationFile, seedDefinitionsFile }) => {
+      const marklogicConfiguration = parseMarkLogicConfig(marklogicConfigurationFile);
+      upload.seed({ marklogicConfiguration, seedDefinitionsFile });
+    }
   )
-  
   .command(
     "install-view <view-definition-file>",
     "Install TDE view definition",
