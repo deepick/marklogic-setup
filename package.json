@@ -4,8 +4,7 @@
   "description": "Tool to set up MarkLogic",
   "main": "src/main.js",
   "scripts": {
-    "test": "jest",
-    "watch": "npm-watch"
+    "test": "jest"
   },
   "author": "Hans Hübner",
   "license": "ISC",
@@ -19,7 +18,6 @@
   },
   "devDependencies": {
     "install": "^0.13.0",
-    "jest": "^26.1.0",
-    "npm-watch": "^0.6.0"
+    "jest": "^26.4.2"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "modules": {
+    ".*": {
+      "permissions": [
+        { "role-name": "kerndaten-writer", "capabilities": ["execute"] }
+      ]
+    },
+    "\\.sparql$": {
+      "format": "text",
+      "contentType": "text/plain"
+    }
+  }
+}
