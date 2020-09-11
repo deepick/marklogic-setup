@@ -9,7 +9,9 @@ const config = require('./config');
 const getPropertiesForPath = (propertyDefinitions, path) => {
   let documentProperties = {};
   for (const [regexp, properties] of Object.entries(propertyDefinitions).sort(
-    // Sort so that shorter regular expressions are evaluated before longer ones
+    // Sort so that shorter regular expressions are evaluated before longer
+    // ones.  This will cause properties that are defined by a longer match
+    // expression to override those from shorter expressions.
     ([a], [b]) => a.length - b.length
   )) {
     const matcher = new RegExp(regexp);
