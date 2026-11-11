@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest"
   },
-  "author": "Hans Hübner",
+  "author": "Hans H\u00fcbner",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
@@ -20,5 +20,8 @@
   "devDependencies": {
     "install": "^0.13.0",
     "jest": "^30.5.2"
+  },
+  "overrides": {
+    "underscore": "1.13.8"
   }
 }
